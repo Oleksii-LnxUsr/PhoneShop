@@ -1,0 +1,22 @@
+{% extends 'Products/html/header_footer.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'Users/css/forms.css' %}">   
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 position-of-form">
+            <form method="post" class="login-form">
+                {% csrf_token %}
+                <label>username</label>
+                <li>{{ form.username}}</li>
+                <label>password</label>
+                <li>{{ form.password }}</li>
+                <input type="submit" value="submit" class="form-button btn">
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'Products/html/header_footer.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'Users/css/forms.css' %}">
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 position-of-form">
+            <form method="POST" class="login-form">
+                {% csrf_token %}
+                <li>{{ form.username }}</li>
+                <li>{{ form.first_name }}</li>
+                <li>{{ form.last_name }}</li>
+                <li>{{ form.email }}</li>
+                <li>{{ form.phone_number }}</li>
+                <li>{{ form.password1 }}</li>
+                <li>{{ form.password2 }}</li>
+                <input type="submit" value="submit" class="form-button btn">
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+
+{% endblock %}

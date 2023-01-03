@@ -1,0 +1,22 @@
+{% extends 'Products/html/header_footer.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="product-card bg-seccondary text-center">
+                    <img src="{{ phone.images.url }}" class="my-2" width="300px">
+                    <h4>{{ phone.model }}</h4>
+                    <form action="{% url 'cart:cart_add' phone.id %}" method="post">
+                        {{ cart_product_form }}
+                        {% csrf_token %}
+                        <input type="submit" name="order" value="add to cart" class="fw-bold p-2 btn bg-warning my-3" id="#AddToCart">
+                    </form>
+                    <h5>{{ phone.price }}$</h5>
+                    <p>{{ phone.describe }}</p>                    
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

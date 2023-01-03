@@ -1,0 +1,9 @@
+.env 
+.idea
+media/images
+media/logo
+Orders/migrations
+Products/migrations
+Users/migrations
+static
+db.sqlite3

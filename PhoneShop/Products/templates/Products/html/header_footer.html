@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+    </head>
+    <body>
+        <link rel="stylesheet" href="{% static 'Products/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'Products/css/header_footer.css' %}">
+        <script type="text/javascript" src="{% static 'Products/js/bootstrap.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'Products/js/jquery.min.js' %}"></script>
+
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand bg-warning nav-bar my-2">
+                <a class="navbar-brand nav-bar-item fw-bold bold-of-brand ms-2" href="{% url 'home_page' %}">PhoneShop</a>
+                <ul class="navbar-nav">
+                    <div class="btn-group ms-3">
+                        <button type="button" class="btn button-collor dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            menu
+                        </button>
+                        <!-- drop-down list with phone brands -->
+                        <div class="dropdown-menu custom-dropdown my-4">
+                            <a class="dropdown-item" href="{% url 'product_brand_list' 'iPhone' %}">iPhone</a>
+                            <a class="dropdown-item" href="{% url 'product_brand_list' 'Samsung' %}">Samsung</a>
+                            <a class="dropdown-item" href="{% url 'product_brand_list' 'Xiaomi' %}">Xiaomi</a>
+                            <a class="dropdown-item" href="{% url 'product_brand_list' 'Lenovo' %}">Lenovo</a>
+                            <a class="dropdown-item" href="{% url 'product_brand_list' 'Honor' %}">Honor</a>
+                        </div>
+                    </div>
+                </ul>
+                
+                {%  if user.is_authenticated %}
+                <li class="ms-auto">
+                    <a href="{% url "cart:cart_detail" %}" class="nav-link nav-bar-item">
+                        <!--Badge with the count of products in the cart -->
+                        {% with total_items=cart|length %}
+                            {% if cart|length > 0 %}
+                                <label class="badge bg-success">{{ total_items }}</label>
+                            {% endif %}
+                        {% endwith %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-cart4" viewBox="0 0 16 16">
+                            <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
+                        </svg>
+                    </a>
+                </li>    
+                <li class="nav-item nav-bar-account-text me-2">
+                    <a class="nav-link nav-bar-item" href="{% url 'user_orders' %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-box-seam-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M15.528 2.973a.75.75 0 0 1 .472.696v8.662a.75.75 0 0 1-.472.696l-7.25 2.9a.75.75 0 0 1-.557 0l-7.25-2.9A.75.75 0 0 1 0 12.331V3.669a.75.75 0 0 1 .471-.696L7.443.184l.01-.003.268-.108a.75.75 0 0 1 .558 0l.269.108.01.003 6.97 2.789ZM10.404 2 4.25 4.461 1.846 3.5 1 3.839v.4l6.5 2.6v7.922l.5.2.5-.2V6.84l6.5-2.6v-.4l-.846-.339L8 5.961 5.596 5l6.154-2.461L10.404 2Z"/>
+                        </svg>
+                    </a>                   
+                </li>
+                {% else %}
+                <li class="nav-item nav-bar-account-text ms-auto">
+                    <a class="nav-link nav-bar-item" href="{% url 'login' %}">Sign in</a>
+                </li>
+                <li class="nav-item nav-bar-account-text">
+                    <a class="nav-link nav-bar-item" href="{% url 'registration' %}">Sign up</a>
+                </li>
+                {% endif %}
+            </nav>
+        </div>
+    </body>
+</html>
+
+{% block content %}
+{% endblock %} 

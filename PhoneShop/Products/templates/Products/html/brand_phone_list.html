@@ -1,0 +1,23 @@
+{% extends 'Products/html/header_footer.html' %}
+{% load static %}
+
+{% block content %}
+  <link rel="stylesheet" href="{% static 'Products/css/brand_phone_list.css' %}">
+  <div class="container-fluid">
+    <div class="row">
+      {% for phone in phones %}
+      <div class="col">
+        <div class="list-group">
+            <a href="{% url 'phone_model' phone.id %}" class="list-group-item list-group-item-action my-4 phone-card">
+              <div class="d-flex w-100 justify-content-between">
+                <img src="{{ phone.images.url }}" class="mx-auto" width="230px">
+              </div>
+              <label class="fw-bold text-center py-2">{{ phone.model|truncatechars:30}}</label>
+              <small class="text-muted">{{ phone.price }}$</small>
+            </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}  

@@ -1,0 +1,111 @@
+{% extends 'Products/html/header_footer.html' %}
+{% load static %}
+
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'Cart/cart_styles.css' %}">
+
+<section class="h-100">
+    <div class="container h-100 py-5">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-10">
+  
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
+          </div>
+          
+          {% for item in cart %}
+          {% with phone=item.phone %}
+
+          <div class="card rounded-3 mb-4">
+            <div class="card-body p-4">
+              <div class="row d-flex justify-content-between align-items-center">
+                <div class="col-md-2 col-lg-2 col-xl-2">
+                  <a href="{% url 'phone_model' phone.id %}"> 
+                    <img src="{{ phone.images.url }}" class="img-fluid rounded-3" alt="Cotton T-shirt">    
+                  </a> 
+                </div>
+                <div class="col-md-3 col-lg-3 col-xl-3">
+                  <p class="lead fw-normal mb-2">{{ phone.model|truncatechars:20 }}</p>
+                  <p><span class="text-muted">Brand: </span>{{ phone.brand }} <span class="text-muted">Color: </span>{{ phone.color }}</p>
+                </div>
+                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                  <input id="form1" min="0" name="quantity" value="{{ item.quantity }}" type="number" class="form-control form-control-sm"/>
+                  <form action="{% url 'cart:cart_add' phone.id %}" method="post">
+                  {% csrf_token %}
+                    {{ cart_product_form }}
+                    <button type="submit" class="btn btn-link px-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                      </svg>
+                    </button>
+                  </form>  
+                  
+                </div>
+                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                  <h5 class="mb-0">${{ item.price }}</h5>
+                </div>
+                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                  <a href="{% url 'cart:cart_remove' phone.id %}" class="text-danger">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                        <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endwith %}
+          {% endfor %}
+          
+  
+          <div class="card">
+            <div class="card-body">
+              {% if cart.get_total_price >= 1 %}
+              <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#MakeOrder">Buy</button>
+              <a class="text-dark ms-2 fw-bold">total price: ${{ cart.get_total_price }}</a>
+              {% else %}
+              <a class="text-dark ms-2 fw-bold">Cart empty</a>
+              {% endif %}
+            </div>
+          </div>
+          
+
+          <div class="modal fade" id="MakeOrder" tabindex="-1" aria-labelledby="MakeOrder" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="MakeOrder">Your address</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  
+                  <form method="post">
+                    {% csrf_token %}
+                    <ul class="address-form mb-4">
+                      <li>{{ form.first_name }}</li>
+                      <li>{{ form.last_name }}</li>
+                      <li>{{ form.email }}</li>
+                      <li>{{ form.postal_code }}</li>
+                      <li>{{ form.city }}</li>
+                      <li>{{ form.address }}</li>
+                    </ul>
+                    <hr>
+                    <button type="submit" class="btn btn-warning">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </form>
+                
+              </div>  
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+                        
+                    
+  
