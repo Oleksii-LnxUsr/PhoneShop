@@ -1,0 +1,9 @@
+Django==3.2.16
+asgiref==3.5.0
+sqlparse==0.4.2
+python-dotenv
+psycopg2-binary
+Pillow
+django-phone-field
+phonenumbers
+django-phonenumber-field

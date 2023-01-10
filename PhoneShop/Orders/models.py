@@ -9,8 +9,8 @@ class Order(models.Model):
         ('Prepare', 'Prepare to deliver'),
         ('In the way', 'Your package in the way'),
         ('Delivered', 'Your package delivered'),
-    )
-
+    )   
+    user = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, blank=True, null=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
@@ -26,6 +26,7 @@ class Order(models.Model):
         ordering = ('-created',)
         verbose_name = 'Order'
         verbose_name_plural = 'Orders'
+        db_table = 'orders'
 
     def __str__(self):
         return 'Order {}'.format(self.id)
@@ -34,7 +35,7 @@ class Order(models.Model):
         return sum(item.get_cost() for item in self.items.all())
 
 
-class OrderItem(models.Model):
+class OrderItem(models.Model):    
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
     phone = models.ForeignKey(Phone, related_name='order_items', on_delete=models.PROTECT)
     price = models.DecimalField(max_digits=10, decimal_places=2)
