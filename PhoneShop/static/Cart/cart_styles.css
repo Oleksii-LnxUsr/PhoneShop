@@ -1,0 +1,50 @@
+body {
+    background: #ffd382;
+}
+
+label {
+    display: none;
+}
+
+.address-form {
+    list-style: none;
+}
+
+ul li {
+    margin-top: 12px;
+}
+
+
+#id_first_name {
+    border: solid 2px orange;
+    border-radius: 5px;
+}
+
+#id_last_name {
+    border: solid 2px orange;
+    border-radius: 5px;
+}
+
+#id_email {
+    border: solid 2px orange;
+    border-radius: 5px;
+}
+
+#id_city {
+    border: solid 2px orange;
+    border-radius: 5px;
+}
+
+#id_address {
+    border: solid 2px orange;
+    border-radius: 5px;
+}
+
+#id_postal_code {
+    border: solid 2px orange;
+    border-radius: 5px;
+}
+
+#id_quantity {
+    display: none;
+}

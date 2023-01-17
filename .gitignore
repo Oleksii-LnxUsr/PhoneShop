@@ -1,0 +1,7 @@
+env
+PhoneShop/.env
+PhoneShop/Cart/migrations
+PhoneShop/Orders/migrations
+PhoneShop/Users/migrations
+PhoneShop/media
+__pycache__

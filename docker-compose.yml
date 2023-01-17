@@ -1,0 +1,27 @@
+services:
+  web-app:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./PhoneShop:/PhoneShop
+    
+    environment:
+      - DB_HOST=database
+      - DB_NAME=phoneshop
+      - DB_USER=admin
+      - DB_PASS=admin
+
+    command: >
+      sh -c "python3 manage.py runserver 0.0.0.0:8000"
+    
+    depends_on:
+      - database
+    
+  database:
+    image: postgres:14.6-alpine
+    environment:
+      - POSTGRES_DB=phoneshop
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin

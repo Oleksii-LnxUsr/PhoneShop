@@ -2,53 +2,37 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'Users/css/profile.css' %}">
+<link rel="stylesheet" href="{% static 'Orders/css/user_orders.css' %}">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
 
 <div class="container">
-<div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 mt-4">
-        {% for order in orders %}
-        {% for item in items %}
-	    <div class="col"> 
-		    <div class="card mb-3 radius-10 border-start border-0 border-3 border-warning">
-		        <div class="card-body">
-                    <a data-bs-toggle="modal" data-bs-target="#exampleModal">
-			            <div class="d-flex align-items-center">
-				            <div>
-					            <p class="mb-0 text-secondary">{{ item.phone.model|truncatechars:25 }}</p> <!-- Phone model -->
-					            <h4 class="my-1 text-danger">{{ order.package_status }}</h4><!-- Order Status -->
-					            <p class="mb-0 font-13">{{ order.total_price }}$</p>
-				            </div> 
-				            <div class="widgets-icons-2 rounded-circle bg-gradient-blooker text-white ms-auto">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
-                                    <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-                                </svg>
-                            </div>
-			            </div> 
-                    </a>
-		        </div>
-		    </div>
-	    </div>
-        {% endfor %}
-        {% endfor %}
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        add comment
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+    <div class="row my-5">
+        <div class="col-12 w-100">
+            <form method="post" class="text-center">
+                {% csrf_token %}
+                <input name="package-code" type="text" class="package-code w-50">
+                <input type="submit" class="btn bg-warning package-code-button" value="Send">
+            </form>
+            {% if messages %}
+                {% for message in messages %}
+                    <h3 class="text-danger text-center my-3">{{ message }}</h3>
+                {% endfor %}
+            {% endif %}
+            {% for order in orders %}
+            {% for item in items %}  
+            <div class="card mb-3 mx-auto ordered-items">
+                <label class="fw-bold ms-1 me-auto badge bg-warning">{{ order.package_status }}</label>
+                <div class="card-body">
+                    <img class="card-img-top" src="{{ item.phone.images.url }}" width="10px"> 
+                    <h4 class=" text-center ">{{ item.phone.model }}</h4>
+                    <p class="card-text text-center ">{{ order.email }}</p>
+                    <label class="fw-bold text-success">{{ item.quantity }} | {{ item.price }}$</label>
                 </div>
             </div>
+            {% endfor %}
+            {% endfor %}
         </div>
-	</div>
+    </div>
 </div>
 {% endblock %}

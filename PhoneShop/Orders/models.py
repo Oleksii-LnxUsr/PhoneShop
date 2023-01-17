@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 
 from Users.models import CustomUser
@@ -10,6 +11,7 @@ class Order(models.Model):
         ('In the way', 'Your package in the way'),
         ('Delivered', 'Your package delivered'),
     )   
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, db_index=True, editable=False)
     user = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, blank=True, null=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)

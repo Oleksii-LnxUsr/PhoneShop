@@ -1,0 +1,41 @@
+.package-code {
+    padding-bottom: 8.5px;
+    border: solid 2px orange;
+}
+
+.package-code-button {
+    margin-top: 4px;
+}
+
+.ordered-items {
+    margin-top: 35px;
+    width: 24rem;
+}
+
+@media (max-width: 1600px) {
+    .ordered-items {
+        width:23rem;
+    }
+}
+
+
+@media (max-width: 1440px) {
+    .ordered-items {
+        width:22rem;
+    }
+}
+
+
+@media (max-width: 1280px) {
+    .ordered-items {
+        width:20rem;
+    }
+}
+
+@media (max-width: 889px) {
+    .ordered-items {
+        width:18rem;
+    }
+}
+
+
