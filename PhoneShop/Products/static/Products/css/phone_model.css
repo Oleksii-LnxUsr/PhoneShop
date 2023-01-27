@@ -1,0 +1,10 @@
+#id_quantity {
+    border: none;
+    border-radius: 5px;
+    border-bottom: solid 2px #ff7b00;
+    background: #ffc107;
+    font-weight: 700!important;
+    padding: 0.3rem!important;
+    color: rgb(0, 0, 0);
+}
+

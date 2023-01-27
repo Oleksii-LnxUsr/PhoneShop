@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseNotFound
-from .models import Phone
+from .models import Phone, Brands
 from Cart.forms import CartAddProductForm
-
+from Orders.models import Order
 
 def phone_model(request, pk):   
     cart_product_form = CartAddProductForm()

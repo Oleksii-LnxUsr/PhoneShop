@@ -2,14 +2,35 @@
 {% load static %}
 
 {% block content %}
+    <link rel="stylesheet" href="{% static 'Products/css/phone_model.css' %}">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="product-card bg-seccondary text-center">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                          <div class="carousel-item active">
+                            <img class="d-block" src="{{ phone.images.url }}" width="300px">
+                          </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="sr-only">Next</span>
+                        </a>
+                      </div>
                     <img src="{{ phone.images.url }}" class="my-2" width="300px">
                     <h4>{{ phone.model }}</h4>
                     <form action="{% url 'cart:cart_add' phone.id %}" method="post">
-                        {{ cart_product_form }}
+                        {{ cart_product_form.quantity }}
                         {% csrf_token %}
                         <input type="submit" name="order" value="add to cart" class="fw-bold p-2 btn bg-warning my-3" id="#AddToCart">
                     </form>

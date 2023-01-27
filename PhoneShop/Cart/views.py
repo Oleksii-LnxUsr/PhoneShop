@@ -23,6 +23,18 @@ def cart_add(request, phone_id):
     return redirect('cart:cart_detail')
 
 
+@require_POST
+def cart_subtract(request, phone_id):
+    cart = Cart(request)
+    phone = get_object_or_404(Phone, id=phone_id)
+    form = CartAddProductForm(request.POST)
+    if form.is_valid():
+        cd = form.cleaned_data
+        cart.subtract(phone=phone,
+                 quantity=cd['quantity'],
+                 update_quantity=cd['update'])
+    return redirect('cart:cart_detail')
+
 def cart_remove(request, phone_id):
     cart = Cart(request)
     phone = get_object_or_404(Phone, id=phone_id)
@@ -40,6 +52,9 @@ def cart_detail(request):
             order = form.save(commit=False)
             order.user = request.user
             order.save()
+
+            ''' to do changing quantity of ordered items ''' 
+            
             for item in cart:
                 OrderItem.objects.create(order=order, phone=item['phone'], price=item['price'], quantity=item['quantity'])
             cart.clear()

@@ -1,3 +1,5 @@
+from django.contrib import messages
+from django.http import HttpResponse
 from decimal import Decimal
 from django.conf import settings
 from Products.models import Phone
@@ -25,7 +27,23 @@ class Cart(object):
         if update_quantity:
             self.cart[phone_id]['quantity'] = quantity
         else:
-            self.cart[phone_id]['quantity'] += quantity
+            phone_quantity = Phone.objects.get(id=phone_id).quantity
+            if self.cart[phone_id]['quantity'] < phone_quantity:
+                self.cart[phone_id]['quantity'] += quantity
+            else:
+                self.cart[phone_id]['quantity'] == quantity
+        self.save()
+        
+    def subtract(self, phone, quantity=1, update_quantity=False):
+        ''' Subtract phone from cart and update quantity '''
+        phone_id = str(phone.id)
+        if update_quantity:
+            self.cart[phone_id]['quantity'] = quantity
+        else:
+            if self.cart[phone_id]['quantity'] > quantity:
+                self.cart[phone_id]['quantity'] -= quantity
+            else:
+                self.cart[phone_id]['quantity'] == quantity
         self.save()
 
     def save(self):

@@ -35,4 +35,9 @@
         </div>
     </div>
 </div>
+{% for order_item in order_items %}
+    <h3>Order {{ order }}, items {{ order_item.phone }}</h3> 
+    {{ order_item.quantity }}
+{% endfor %}
+
 {% endblock %}
