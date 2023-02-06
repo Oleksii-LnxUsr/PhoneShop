@@ -9,6 +9,5 @@ urlpatterns = [
     path('', include('Users.urls')),
     path('cart/', include('Cart.urls')),
     path('', include('Products.urls')),
-    path('__debug__/', include('debug_toolbar.urls')),
 ]
 

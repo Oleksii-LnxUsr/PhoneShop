@@ -2,22 +2,45 @@
 {% load static %}
 
 {% block content %}
-  <link rel="stylesheet" href="{% static 'Products/css/brand_phone_list.css' %}">
-  <div class="container-fluid">
-    <div class="row">
-      {% for phone in phones %}
-      <div class="col">
-        <div class="list-group">
-            <a href="{% url 'phone_model' phone.id %}" class="list-group-item list-group-item-action my-4 phone-card">
-              <div class="d-flex w-100 justify-content-between">
-                <img src="{{ phone.images.url }}" class="mx-auto" width="230px">
-              </div>
-              <label class="fw-bold text-center py-2">{{ phone.model|truncatechars:30}}</label>
-              <small class="text-muted">{{ phone.price }}$</small>
-            </a>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-{% endblock %}  
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>Shop {{ brand }} Catalog</title>
+        <link rel="stylesheet" href="{% static 'Products/css/brand_phone_list.css' %}">
+    </head>
+    <body>
+        <section class="py-2">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                  {% for phone in phones %}
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                          <a href="{% url 'phone_model' phone.id %}" class="text-reset text-decoration-none">
+                            {% for images in phone.images.all %}
+                              {% if forloop.first %}
+                                <img class="card-img-top" src="{{ images.images.url }}"/>
+                              {% endif %}
+                            {% endfor %}
+                              <div class="card-body p-4">
+                                <div class="text-center">
+                                  <!-- Product name-->
+                                  <h5 class="fw-bolder">{{ phone.model|truncatechars:30}}</h5>
+                                  <!-- Product price-->
+                                  <span>{{ phone.price }}$</span>
+                              </div>
+                            </div>
+                          </a>
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                              <form action="{% url 'cart:cart_add' phone.id %}" method="post" class="text-center">
+                                {{ cart_product_form.quantity }}
+                                {% csrf_token %}
+                                <input type="submit" name="order" value="add to cart" class="btn btn-outline-dark mt-auto">
+                              </form>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
+{% endblock %}

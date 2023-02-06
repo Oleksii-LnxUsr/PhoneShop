@@ -5,7 +5,6 @@ from django.conf import settings
 from Products.models import Phone
 
 
-
 class Cart(object):
 
     def __init__(self, request):
@@ -61,7 +60,7 @@ class Cart(object):
     def __iter__(self):
         ''' Iterate through the items in the cart and get the products '''
         phone_ids = self.cart.keys()
-        phones = Phone.objects.filter(id__in=phone_ids)
+        phones = Phone.objects.filter(id__in=phone_ids).prefetch_related('images', 'brand')
         for phone in phones:
             self.cart[str(phone.id)]['phone'] = phone
 
@@ -69,7 +68,7 @@ class Cart(object):
             item['price'] = Decimal(item['price'])
             item['total_price'] = item['price'] * item['quantity']
             yield item
-
+ 
     def __len__(self):
         ''' Counting all items in the cart '''
         return sum(item['quantity'] for item in self.cart.values())

@@ -69,6 +69,13 @@ li {
     margin-top: 7px;
 }
 
+#footer {
+    clear: both;
+    position: relative;
+    height: 200px;
+    margin-top: 350px;
+ }
+
 
 #id_phone_number {
     border: solid 2px orangered;

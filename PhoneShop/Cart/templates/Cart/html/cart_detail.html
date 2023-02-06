@@ -3,6 +3,7 @@
 
 
 {% block content %}
+<title>{{ request.user.username }} Cart</title>
 <link rel="stylesheet" href="{% static 'Cart/cart_styles.css' %}">
 
 <section class="h-100">
@@ -22,11 +23,16 @@
               <div class="row d-flex justify-content-between align-items-center">
                 <div class="col-md-2 col-lg-2 col-xl-2">
                   <a href="{% url 'phone_model' phone.id %}"> 
-                    <img src="{{ phone.images.url }}" class="img-fluid rounded-3" alt="Cotton T-shirt">    
+                    {% for images in phone.images.all %}
+                      {% if forloop.first %}
+                        <img src="{{ images.images.url }}" class="img-fluid rounded-3">
+                      {% endif %} 
+                    {% endfor %}
                   </a> 
                 </div>
                 <div class="col-md-3 col-lg-3 col-xl-3">
                   <p class="lead fw-normal mb-2">{{ phone.model|truncatechars:20 }}</p>
+                  <!-- Fix n+1 here -->
                   <p><span class="text-muted">Brand: </span>{{ phone.brand }} <span class="text-muted">Color: </span>{{ phone.color }}</p>
                 </div>
                 
@@ -40,7 +46,7 @@
                       </svg>
                     </button>
                   </form>  
-                  <input id="form1" min="0" name="quantity" value="{{ item.quantity }}" type="number" class="form-control form-control-sm"/>
+                  <input id="form1" min="0" name="quantity" value="{{ item.quantity }}" type="number" class="form-control form-control-sm" readonly="true"/>
                   <form action="{% url 'cart:cart_add' phone.id %}" method="post">
                   {% csrf_token %}
                     {{ cart_product_form }}
