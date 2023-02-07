@@ -9,35 +9,22 @@
 <div class="container">
     <div class="row my-5">
         <div class="col-12 w-100">
-            <form method="post" class="text-center">
-                {% csrf_token %}
-                <input name="package-code" type="text" class="package-code w-50">
-                <input type="submit" class="btn bg-warning package-code-button" value="Send">
-            </form>
-            {% if messages %}
-                {% for message in messages %}
-                    <h3 class="text-danger text-center my-3">{{ message }}</h3>
-                {% endfor %}
-            {% endif %}
             {% for order in orders %}
-            {% for item in items %}  
-            <div class="card mb-3 mx-auto ordered-items">
-                <label class="fw-bold ms-1 me-auto badge bg-warning">{{ order.package_status }}</label>
-                <div class="card-body">
-                    <img class="card-img-top" src="{{ item.phone.images.url }}" width="10px"> 
-                    <h4 class=" text-center ">{{ item.phone.model }}</h4>
-                    <p class="card-text text-center ">{{ order.email }}</p>
-                    <label class="fw-bold text-success">{{ item.quantity }} | {{ item.price }}$</label>
+            <h3 class="text-center">Order {{ order.email }}</h3>
+            {% for item in order.items.all %}
+            <a href="{% url 'phone_model' item.phone.id %}" class="text-reset text-decoration-none">
+                <div class="card mb-3 mx-auto ordered-items">
+                    <label class="fw-bold ms-1 me-auto badge bg-warning">{{ order.package_status }}</label>
+                    <div class="card-body">
+                        <h4 class="text-center">{{ item.phone.model }}</h4>
+                        <p class="card-text text-center ">{{ order.email }}</p>
+                        <label class="fw-bold text-success">{{ item.quantity }} pc. | {{ item.price }}$</label>
+                    </div>
                 </div>
-            </div>
+            </a>
             {% endfor %}
             {% endfor %}
         </div>
     </div>
 </div>
-{% for order_item in order_items %}
-    <h3>Order {{ order }}, items {{ order_item.phone }}</h3> 
-    {{ order_item.quantity }}
-{% endfor %}
-
 {% endblock %}
