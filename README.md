@@ -59,7 +59,7 @@ Page with information about product with carousel
 
 ![Screenshot_8](https://github.com/JustWriteCode0/PhoneShop/assets/111213562/6ca05904-9e33-4bef-ab83-13858cbffee9)
 
-You orders with status such as - preparing, in the way, delivered
+Your orders with status such as - preparing, in the way, delivered
 
 ![Screenshot_7](https://github.com/JustWriteCode0/PhoneShop/assets/111213562/c3f95ef8-0141-4a70-945c-5a2c788be6db)
 
