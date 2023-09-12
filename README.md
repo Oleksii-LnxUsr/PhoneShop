@@ -1,6 +1,3 @@
-**PhoneShop**
-Websit
-
 # PhoneShop
 
 PhoneShop is a simple e-commerce website for buying and selling mobile phones. This repository contains the source code for the PhoneShop project.
